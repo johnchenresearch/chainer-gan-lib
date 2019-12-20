@@ -79,7 +79,7 @@ def load_inception_model():
     return model
 
 
-def calc_inception(gen, batchsize=100):
+def calc_inception(gen, batchsize=25):
     @chainer.training.make_extension()
     def evaluation(trainer):
         model = load_inception_model()
@@ -109,7 +109,7 @@ def calc_inception(gen, batchsize=100):
     return evaluation
 
 
-def get_mean_cov(model, ims, batch_size=100):
+def get_mean_cov(model, ims, batch_size=25):
     n, c, w, h = ims.shape
     n_batches = int(math.ceil(float(n) / float(batch_size)))
 
@@ -151,7 +151,7 @@ def FID(m0,c0,m1,c1):
     ret += np.trace(c0 + c1 - 2.0*scipy.linalg.sqrtm(np.dot(c0, c1)))
     return np.real(ret)
 
-def calc_FID(gen, batchsize=100, stat_file="%s/cifar-10-fid.npz"%os.path.dirname(__file__)):
+def calc_FID(gen, batchsize=25, stat_file="%s/cifar-10-fid.npz"%os.path.dirname(__file__)):
     """Frechet Inception Distance proposed by https://arxiv.org/abs/1706.08500"""
     @chainer.training.make_extension()
     def evaluation(trainer):
