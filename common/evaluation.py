@@ -97,7 +97,7 @@ def calc_inception(gen, batchsize=25):
             ims.append(x)
         ims = np.asarray(ims)
         _, _, _, h, w = ims.shape
-        ims = ims.reshape((n_ims, 3, h, w)).astype("f")
+        ims = ims.reshape((-1, 3, h, w)).astype("f")
 
         mean, std = inception_score(model, ims)
 
